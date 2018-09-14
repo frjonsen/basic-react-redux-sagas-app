@@ -9,7 +9,7 @@ import * as actions from './actions';
 export function* getPosts(action: GetPostsRequest) : IterableIterator<CallEffect | PutEffect<actions.GetPostActionResults>>  {
     try {
         // Using call isn't strictly necessary here, but simplifies testing
-        const response = yield call(axios.get<Post>, "https://jsonplaceholder.typicode.com/posts");
+        const response = yield call(axios.get, "https://jsonplaceholder.typicode.com/posts");
         // We create a new action, of type GET_POSTS_SUCCESS, with the response as payload
         let result: Post[] = response.data;
         /* Have to do type assertion, because compiler fails to recognize that the type matches */
