@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import {StoreState} from './types';
 import {postReducer} from './reducers'
 import { Provider } from 'react-redux';
-import RequestButton from './containers/RequestButton';
+import {RequestButton, PostList} from './containers';
 import * as sagas from './sagas';
 
 const initialState: StoreState = {
@@ -19,7 +19,10 @@ sagaMiddleware.run(sagas.watchGetPostsRequest);
 
 ReactDOM.render(
   <Provider store={store}>
-    <RequestButton />
+    <div>
+      <RequestButton />
+      <PostList />
+    </div>
   </Provider>
   ,
   document.getElementById('root') as HTMLElement

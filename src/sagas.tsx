@@ -2,21 +2,22 @@ import * as constants from'./constants';
 import { call, put, takeEvery, CallEffect, PutEffect } from 'redux-saga/effects'
 import { GetPostsRequest } from './actions';
 import axios from 'axios';
-//import {Post} from './types';
+import {Post} from './types';
 import * as actions from './actions';
 
 // This will be the function called when a GET_POSTS_REQUEST-action is fired
 export function* getPosts(action: GetPostsRequest) : IterableIterator<CallEffect | PutEffect<actions.GetPostActionResults>>  {
-    // Using call isn't strictly necessary here, but simplifies testing
     try {
+        // Using call isn't strictly necessary here, but simplifies testing
         const response = yield call(axios.get, "https://jsonplaceholder.typicode.com/posts");
         // We create a new action, of type GET_POSTS_SUCCESS, with the response as payload
-        let res: actions.GetPostsSuccess = {type: constants.GET_POSTS_SUCCESS, payload: response.data};
+        let result: Post[] = response.data;
+        let res: actions.GetPostsSuccess = {type: constants.GET_POSTS_SUCCESS, payload: result};
         yield put(res /* Have to do type assertion, because compiler fails to recognize it */);
     }
-    catch {
+    catch(error) {
         // Or a failure action, if REST call failed
-        yield put({ type: constants.GET_POSTS_FAILURE, payload: "asd" } as actions.GetPostsFailure);
+        yield put({ type: constants.GET_POSTS_FAILURE, payload: error.message } as actions.GetPostsFailure);
     }
 }
 
