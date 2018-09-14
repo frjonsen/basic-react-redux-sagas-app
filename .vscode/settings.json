@@ -1,0 +1,10 @@
+{
+    // The following will hide the js and map files in the editor
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/.gitignore": true,
+        "**/package-lock.json": true,
+        "**/build": true,
+        "**/.vscode": true
+    }
+}
