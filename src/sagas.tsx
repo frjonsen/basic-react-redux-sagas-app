@@ -9,6 +9,7 @@ import * as actions from './actions';
 export function* getPosts(action: GetPostsRequest) : IterableIterator<CallEffect | PutEffect<actions.GetPostActionResults>>  {
     try {
         // Using call isn't strictly necessary here, but simplifies testing
+        // Seems to be difficult to get full typing in sagas. response ends up as `any` here
         const response = yield call(axios.get, "https://jsonplaceholder.typicode.com/posts");
         // We create a new action, of type GET_POSTS_SUCCESS, with the response as payload
         let result: Post[] = response.data;
